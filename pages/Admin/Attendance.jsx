@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import 'dotenv/config';
 const Attendance = ({navigation, route}) => {
   const {ID, num} = route.params;
   // const {num} = route.params;
@@ -24,9 +25,10 @@ const Attendance = ({navigation, route}) => {
 
   // console.log({...person, Team: 'ay yoo'});
   // const [fetchedData, setData] = useState([]);
-  const dataUri =
-    'https://sheets.googleapis.com/v4/spreadsheets/1ugt1y_LaeeHFj70mCqMLYOEOi2e1ttQw8_027z2VcuU/values/sheet1?valueRenderOption=FORMATTED_VALUE&key=AIzaSyCLnffEAbEFua6PyBjnm0UXcRoAElYYLhs';
-  //'https://sheet.best/api/sheets/132e138d-4ba1-4032-8e23-18b4551a7f3c';
+  const apiKey = process.env.GOOGLE_API_KEY;
+  const dataUri = `https://sheets.googleapis.com/v4/spreadsheets/1ugt1y_LaeeHFj70mCqMLYOEOi2e1ttQw8_027z2VcuU/values/sheet1?valueRenderOption=FORMATTED_VALUE&key=${apiKey}`;
+
+
   const today = new Date();
   const time =
     today.getHours() + 1 + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -116,7 +118,7 @@ const Attendance = ({navigation, route}) => {
       .catch(err => {
         console.log(err);
       });
-  }, [ID, num, time]);
+  }, [ID, num, time,dataUri]);
 
   const handleSubmit = () => {
     console.log('ohh yeaah', row);
